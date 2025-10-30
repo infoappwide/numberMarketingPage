@@ -1,1 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Number — Crack the Daily Code</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Number is a clean, fast logic puzzle. Guess the code, unlock new eras, earn XP, and climb the leaderboard. Offline play supported." />
+  <meta name="theme-color" content="#5A57FF" />
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="Number — Crack the Daily Code" />
+  <meta property="og:description" content="A minimalist, satisfying number puzzle. Daily challenges, power-ups, eras, XP, and leaderboards." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://YOUR-USERNAME.github.io/NUMBER" />
+  <meta property="og:image" content="https://YOUR-USERNAME.github.io/NUMBER/og-image.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Number — Crack the Daily Code" />
+  <meta name="twitter:description" content="A clean, fast logic puzzle with daily play, eras, and leaderboards." />
+  <meta name="twitter:image" content="https://YOUR-USERNAME.github.io/NUMBER/og-image.png" />
+
+  <!-- JSON-LD (App/SoftwareApplication) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "Number",
+    "operatingSystem": "iOS",
+    "applicationCategory": "GamePuzzle",
+    "description": "Guess the hidden number using pure logic. Unlock eras, collect them, earn XP, and rule the leaderboard.",
+    "url": "https://YOUR-USERNAME.github.io/NUMBER",
+    "inLanguage": "en",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": { "@type": "Organization", "name": "Number Game" }
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#0f1226; /* dark gradient base */
+      --bg2:#171a38;
+      --text:#e9ecff;
+      --muted:#b9c0ff;
+      --brand:#5A57FF;
+      --brand-2:#8A86FF;
+      --card:#14183a;
+      --card-border:rgba(255,255,255,0.08);
+      --shadow:0 10px 30px rgba(23,26,56,.25);
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f7f7ff;
+        --bg2:#ffffff;
+        --text:#1a1d3a;
+        --muted:#5661b3;
+        --card:#ffffff;
+        --card-border:rgba(16,24,40,.08);
+        --shadow:0 10px 25px rgba(16,24,40,.08);
+      }
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, var(--brand-2) 0%, transparent 50%),
+        radial-gradient(800px 400px at 110% 10%, #ffb84d55 0%, transparent 50%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Layout */
+    .container{max-width:1080px;margin:0 auto;padding:20px 20px 80px}
+    header{position:sticky;top:0;backdrop-filter:saturate(1.2) blur(8px);background:linear-gradient(180deg, rgba(10,12,28,.8), rgba(10,12,28,.4));border-bottom:1px solid var(--card-border);z-index:10}
+    .nav{display:flex;gap:16px;align-items:center;justify-content:space-between;max-width:1080px;margin:0 auto;padding:12px 20px}
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{
+      width:32px;height:32px;display:grid;place-items:center;
+      border-radius:9px;background:conic-gradient(from 180deg,#ffb84d,#ff6b6b,#8a86ff,#5a57ff);
+      box-shadow:var(--shadow);font-weight:800;color:white
+    }
+    .nav a.btn{padding:10px 14px;border:1px solid var(--card-border);border-radius:10px;font-weight:600}
+    .nav .cta{background:var(--brand);color:white;border-color:transparent}
+    .nav .cta:hover{filter:brightness(1.05)}
+    #themeToggle{border:none;background:transparent;color:var(--muted);cursor:pointer;font-weight:700}
+
+    /* Hero */
+    .hero{padding:70px 20px 40px;text-align:center}
+    .hero h1{font-size:48px;line-height:1.1;margin:10px 0}
+    .hero p{color:var(--muted);max-width:720px;margin:10px auto 24px}
+    .badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .badge{display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;background:var(--card);border:1px solid var(--card-border);box-shadow:var(--shadow);font-weight:700}
+    .badge small{display:block;font-weight:600;color:var(--muted);line-height:1.2}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+
+    /* Sections */
+    section{padding:40px 0;border-top:1px solid var(--card-border)}
+    h2{font-size:28px;margin:0 0 8px}
+    .sub{color:var(--muted);margin:0 0 16px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{
+      background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:18px;box-shadow:var(--shadow);height:100%;
+    }
+    .card h3{margin:4px 0 6px}
+    .pill{display:inline-flex;gap:8px;align-items:center;background:rgba(138,134,255,.16);border:1px solid var(--card-border);color:var(--text);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}
+
+    .screens{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .shot{background:var(--card);border:1px solid var(--card-border);border-radius:18px;padding:8px;box-shadow:var(--shadow)}
+    .shot img{width:100%;height:auto;border-radius:12px;display:block}
+
+    .faq{max-width:860px}
+    details{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:12px 14px;margin:10px 0}
+    summary{font-weight:700;cursor:pointer}
+
+    footer{padding:40px 20px;color:var(--muted);text-align:center}
+
+    /* Responsive */
+    @media (max-width:960px){
+      .grid{grid-template-columns:1fr 1fr}
+      .screens{grid-template-columns:1fr 1fr}
+      .hero h1{font-size:38px}
+    }
+    @media (max-width:640px){
+      .grid{grid-template-columns:1fr}
+      .screens{grid-template-columns:1fr}
+      .hero h1{font-size:32px}
+      .nav .label{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="brand">
+      <div class="logo">#</div>
+      <strong>Number</strong>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a class="btn" href="#features">Features</a>
+      <a class="btn" href="#screens">Screenshots</a>
+      <a class="btn" href="#faq">FAQ</a>
+      <a class="btn cta" href="https://apps.apple.com/app/idYOUR_APP_ID" target="_blank" rel="noopener">Download</a>
+      <button id="themeToggle" title="Toggle theme">🌗</button>
+    </div>
+  </nav>
+</header>
+
+<main class="container">
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="pill"><span>New</span> <span class="mono">Daily puzzle</span></div>
+    <h1>Crack the Daily Number</h1>
+    <p>A minimalist, satisfying logic game. Guess the hidden code, unlock new <strong>Eras</strong>, earn <strong>XP</strong>, and climb the <strong>Leaderboard</strong>. Play anywhere — <em>no Wi-Fi needed</em>.</p>
+    <div class="badges">
+      <a class="badge" href="https://apps.apple.com/app/idYOUR_APP_ID" target="_blank" rel="noopener">
+        <span></span> <span><small>Get it on</small>App Store</span>
+      </a>
+      <a class="badge" href="#screens"><span>👀</span> <span><small>See</small>Screenshots</span></a>
+      <a class="badge" href="#features"><span>✨</span> <span><small>Why</small>You'll Love It</span></a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <h2>Designed for Focus</h2>
+    <p class="sub">Clean visuals, quick rounds, deep logic. Perfect for a minute — or an hour.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>Daily Challenge</h3>
+        <p>One fresh puzzle every day to keep your streak alive.</p>
+      </div>
+      <div class="card">
+        <h3>Classic & Hard Modes</h3>
+        <p>Play casual or push yourself with tougher constraints.</p>
+      </div>
+      <div class="card">
+        <h3>Limits & Perks</h3>
+        <p>Survive dynamic restrictions and use fair power-ups when you need them.</p>
+      </div>
+      <div class="card">
+        <h3>Unlock Eras</h3>
+        <p>Beat levels to unlock new Eras and add them to your Collection.</p>
+      </div>
+      <div class="card">
+        <h3>XP & Leaderboard</h3>
+        <p>Earn XP, level up, and compete for the top spot.</p>
+      </div>
+      <div class="card">
+        <h3>Offline Play</h3>
+        <p>Keep playing anywhere — no connection required.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how">
+    <h2>How It Works</h2>
+    <p class="sub">No math tricks — just reasoning.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>1) Guess</h3>
+        <p>Enter a code and commit. Every guess gives you feedback.</p>
+      </div>
+      <div class="card">
+        <h3>2) Learn</h3>
+        <p>Use smart hints and clear signals to refine your logic.</p>
+      </div>
+      <div class="card">
+        <h3>3) Crack</h3>
+        <p>Lock in the pattern, crack the code, and push your streak.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section id="screens">
+    <h2>Screenshots</h2>
+    <p class="sub">A glimpse of the flow. Replace these with your actual App Store shots.</p>
+    <div class="screens">
+      <div class="shot"><img src="screenshots/1.png" alt="Number — basic gameplay" /></div>
+      <div class="shot"><img src="screenshots/2.png" alt="Number — limits & perks" /></div>
+      <div class="shot"><img src="screenshots/3.png" alt="Number — unlock eras" /></div>
+      <div class="shot"><img src="screenshots/4.png" alt="Number — leaderboard" /></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <h2>Ready to crack today’s code?</h2>
+    <p class="sub">Simple to start, hard to master — and always satisfying.</p>
+    <div class="badges">
+      <a class="badge" href="https://apps.apple.com/app/idYOUR_APP_ID" target="_blank" rel="noopener">
+        <span></span> <span><small>Download on</small>App Store</span>
+      </a>
+      <a class="badge" href="privacy.html"><span>🔒</span> <span><small>Read our</small>Privacy</span></a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq">
+    <h2>FAQ</h2>
+    <details>
+      <summary>Does Number work offline?</summary>
+      <p>Yes. You can keep playing anywhere — no Wi-Fi needed.</p>
+    </details>
+    <details>
+      <summary>Is there a daily puzzle?</summary>
+      <p>Absolutely. A fresh challenge appears every day to keep your streak alive.</p>
+    </details>
+    <details>
+      <summary>What are Eras?</summary>
+      <p>They’re themed milestones you unlock by beating levels. Each Era is added to your Collection.</p>
+    </details>
+    <details>
+      <summary>How do leaderboards work?</summary>
+      <p>Earn XP from wins, then compete globally to rise to the top.</p>
+    </details>
+    <details>
+      <summary>How can I contact support?</summary>
+      <p>Email us at <a href="mailto:infoappwide@gmail.com">infoappwide@gmail.com</a>.</p>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <div>© <span id="year"></span> Number Game</div>
+  <div style="margin-top:6px;">
+    <a href="privacy.html">Privacy Policy</a> ·
+    <a href="#home">Back to top</a>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll for in-page links
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const id = a.getAttribute('href');
+      if(id.length>1){
+        e.preventDefault();
+        document.querySelector(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+
+  // Theme toggle (persists in localStorage)
+  const btn = document.getElementById('themeToggle');
+  const key = 'number-theme';
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  const saved = localStorage.getItem(key);
+  if(saved==='light' || (!saved && prefersLight)){ document.documentElement.dataset.theme='light'; }
+  btn.addEventListener('click', ()=>{
+    const isLight = document.documentElement.dataset.theme==='light';
+    document.documentElement.dataset.theme = isLight ? '' : 'light';
+    localStorage.setItem(key, isLight ? '' : 'light');
+  });
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
